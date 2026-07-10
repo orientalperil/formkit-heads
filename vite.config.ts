@@ -7,9 +7,12 @@ export default defineConfig({
   plugins: [vue(), dts({ tsconfigPath: './tsconfig.json', include: ['src'] })],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      // Entry key becomes the output file path (dist/vuetify/index.js),
+      // which the package.json "exports" map points at.
+      entry: {
+        'vuetify/index': resolve(__dirname, 'src/vuetify/index.ts'),
+      },
       formats: ['es'],
-      fileName: 'index',
     },
     rollupOptions: {
       // Don't bundle these — consumers provide them

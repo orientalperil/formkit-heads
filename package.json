@@ -4,9 +4,9 @@
   "homepage": "https://github.com/orientalperil/formkit-heads",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+    "./vuetify": {
+      "types": "./dist/vuetify/index.d.ts",
+      "import": "./dist/vuetify/index.js"
     }
   },
   "files": [
