@@ -1,0 +1,45 @@
+{
+  "name": "formkit-heads",
+  "version": "0.1.0",
+  "homepage": "https://github.com/orientalperil/formkit-heads",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier src --write",
+    "format:check": "prettier src --check",
+    "prepare": "husky"
+  },
+  "peerDependencies": {
+    "@formkit/core": "^1.0.0",
+    "vue": "^3.0.0",
+    "vuetify": "^3.0.0"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@types/node": "^26.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/tsconfig": "^0.9.1",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "husky": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.8.0",
+    "vite": "^8.1.4",
+    "vite-plugin-dts": "^5.0.3",
+    "vue": "^3.0.0",
+    "vue-tsc": "^3.3.7"
+  }
+}
