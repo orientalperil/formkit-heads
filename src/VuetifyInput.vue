@@ -11,10 +11,10 @@
  *   context.node          - the FormKitNode (input(), store, events, ...)
  *   context.label, etc.
  */
-import { ref, computed, onBeforeUnmount } from 'vue'
-import type { Component, PropType } from 'vue'
-import { VTextField, VTextarea, VSelect, VCheckbox } from 'vuetify/components'
-import type { FormKitFrameworkContext } from '@formkit/core'
+import type { FormKitFrameworkContext } from "@formkit/core"
+import { computed, onBeforeUnmount, ref } from "vue"
+import type { Component, PropType } from "vue"
+import { VCheckbox, VSelect, VTextarea, VTextField } from "vuetify/components"
 
 const props = defineProps({
   context: {
@@ -42,7 +42,7 @@ const model = computed({
 // FormKit's display-gated projection, so it's empty until a message should show.
 function collectErrors(): string[] {
   return Object.values(props.context.messages ?? {})
-    .filter((m) => m.visible && (m.type === 'validation' || m.type === 'error'))
+    .filter((m) => m.visible && (m.type === "validation" || m.type === "error"))
     .map((m) => String(m.value))
 }
 
@@ -55,9 +55,9 @@ function collectErrors(): string[] {
 const errorMessages = ref(collectErrors())
 const refresh = () => (errorMessages.value = collectErrors())
 const receipts = [
-  node.on('message-added', refresh),
-  node.on('message-removed', refresh),
-  node.on('message-updated', refresh),
+  node.on("message-added", refresh),
+  node.on("message-removed", refresh),
+  node.on("message-updated", refresh),
 ]
 onBeforeUnmount(() => receipts.forEach((receipt) => node.off(receipt)))
 
@@ -69,9 +69,7 @@ const componentMap: Record<string, Component> = {
   vselect: VSelect,
   vcheckbox: VCheckbox,
 }
-const component = computed<Component>(
-  () => componentMap[node.props.type] ?? VTextField,
-)
+const component = computed<Component>(() => componentMap[node.props.type] ?? VTextField)
 </script>
 
 <template>

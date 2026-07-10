@@ -1,1 +1,1 @@
-export { default as VuetifyInput } from './VuetifyInput.vue'
+export { default as VuetifyInput } from "./VuetifyInput.vue"
