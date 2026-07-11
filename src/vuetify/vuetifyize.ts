@@ -22,6 +22,7 @@ export const DEFAULT_TYPE_MAP: Readonly<Record<string, string>> = {
   text: "vtext",
   textarea: "vtextarea",
   select: "vselect",
+  dataselect: "vdataselect",
   checkbox: "vcheckbox",
   number: "vnumber",
   email: "vemail",
