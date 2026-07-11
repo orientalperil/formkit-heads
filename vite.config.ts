@@ -33,7 +33,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // Don't bundle these — consumers provide them
-      external: ['vue', 'vuetify', 'vuetify/components', '@formkit/core', '@formkit/inputs'],
+      external: ['vue', 'vuetify', 'vuetify/components', '@formkit/core', '@formkit/inputs', '@formkit/vue'],
     },
   },
 })
