@@ -22,7 +22,7 @@
     "prepare": "husky"
   },
   "peerDependencies": {
-    "@formkit/core": "^2.1.0",
+    "@formkit/vue": "^2.1.0",
     "vue": "^3.0.0",
     "vuetify": "^4.0.0"
   },
