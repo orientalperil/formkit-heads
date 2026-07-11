@@ -65,11 +65,23 @@ onBeforeUnmount(() => receipts.forEach((receipt) => node.off(receipt)))
 // component. The type is the single source of truth — no separate prop needed.
 const componentMap: Record<string, Component> = {
   vtext: VTextField,
+  vnumber: VTextField,
+  vemail: VTextField,
   vtextarea: VTextarea,
   vselect: VSelect,
   vcheckbox: VCheckbox,
 }
 const component = computed<Component>(() => componentMap[node.props.type] ?? VTextField)
+
+// Some FormKit types imply a specific HTML input `type`. The consumer can still
+// override via the `inputType` prop; this only supplies the default.
+const inputTypeMap: Record<string, string> = {
+  vnumber: "number",
+  vemail: "email",
+}
+const inputType = computed<string | undefined>(
+  () => node.props.inputType ?? inputTypeMap[node.props.type],
+)
 </script>
 
 <template>
@@ -77,7 +89,7 @@ const component = computed<Component>(() => componentMap[node.props.type] ?? VTe
     :is="component"
     v-model="model"
     :label="context.label"
-    :type="node.props.inputType"
+    :type="inputType"
     :items="node.props.items"
     :error-messages="errorMessages"
     v-bind="node.props.vuetifyProps"
