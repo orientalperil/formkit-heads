@@ -11,22 +11,15 @@ import type { FormKitSchemaNode } from "@formkit/core"
  * Vuetify component from the node's *type name*, so the schema has to carry the
  * `v`-prefixed names — this transform is the mapping layer between the two.
  *
- * Only the types in {@link DEFAULT_TYPE_MAP} are rewritten; every other node
- * (including `number`/`email`, container `list`/`group`/`form` nodes, and custom
- * types like `dataSelect`) is left untouched. Pass `extraTypeMap` to add or
- * override mappings.
+ * Every node with a string `$formkit` type is rewritten by prefixing `v`
+ * (`text` -> `vtext`, `select` -> `vselect`, ...), except the structural
+ * container types in {@link CONTAINER_TYPES}, which are left untouched. Pass
+ * `extraTypeMap` to supply explicit mappings for types whose bridge name isn't
+ * just the `v`-prefixed original.
  */
 
-/** Built-in FormKit type name -> `formkit-heads/vuetify` bridge type name. */
-export const DEFAULT_TYPE_MAP: Readonly<Record<string, string>> = {
-  text: "vtext",
-  textarea: "vtextarea",
-  select: "vselect",
-  dataselect: "vdataselect",
-  checkbox: "vcheckbox",
-  number: "vnumber",
-  email: "vemail",
-}
+/** Structural node types that have no Vuetify bridge and pass through unchanged. */
+export const CONTAINER_TYPES: ReadonlySet<string> = new Set(["list", "group", "form"])
 
 /**
  * Map a schema's `$formkit` input types onto the Vuetify bridge types.
@@ -44,8 +37,6 @@ export function vuetifyize(
   schema: readonly FormKitSchemaNode[],
   extraTypeMap: Record<string, string> = {},
 ): FormKitSchemaNode[] {
-  const typeMap = { ...DEFAULT_TYPE_MAP, ...extraTypeMap }
-
   // Deep-clone plain objects/arrays but pass functions (and other non-plain
   // values) through by reference — `structuredClone` throws on functions, and
   // field overrides like `dataSelect()` inject a function-valued `options`
@@ -64,8 +55,12 @@ export function vuetifyize(
     for (const node of nodes) {
       if (!node || typeof node !== "object") continue
       const record = node as Record<string, unknown>
-      if (typeof record.$formkit === "string" && record.$formkit in typeMap) {
-        record.$formkit = typeMap[record.$formkit]
+      if (typeof record.$formkit === "string") {
+        if (record.$formkit in extraTypeMap) {
+          record.$formkit = extraTypeMap[record.$formkit]
+        } else if (!CONTAINER_TYPES.has(record.$formkit)) {
+          record.$formkit = `v${record.$formkit}`
+        }
       }
       if (Array.isArray(record.children)) walk(record.children as FormKitSchemaNode[])
     }
