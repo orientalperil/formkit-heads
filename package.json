@@ -7,7 +7,8 @@
     "./vuetify": {
       "types": "./dist/vuetify/index.d.ts",
       "import": "./dist/vuetify/index.js"
-    }
+    },
+    "./vuetify/vuetify-formkit-overrides.css": "./dist/vuetify/vuetify-formkit-overrides.css"
   },
   "files": [
     "dist/"
