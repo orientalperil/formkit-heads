@@ -3,10 +3,10 @@
  * Vuetify head for the FormKit `vtextarea` type.
  * Register with createInput(TextareaInput) in the consuming app.
  */
+import { useFormKitInput } from "./useFormKitInput.js"
 import type { FormKitFrameworkContext } from "@formkit/core"
 import type { PropType } from "vue"
 import { VTextarea } from "vuetify/components"
-import { useFormKitInput } from "./useFormKitInput.js"
 
 const props = defineProps({
   context: {

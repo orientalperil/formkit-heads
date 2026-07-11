@@ -3,11 +3,11 @@
  * Vuetify head for FormKit text-family types: vtext, vnumber, vemail.
  * Register each with createInput(TextInput) in the consuming app.
  */
+import { useFormKitInput } from "./useFormKitInput.js"
 import type { FormKitFrameworkContext } from "@formkit/core"
 import { computed } from "vue"
 import type { PropType } from "vue"
 import { VTextField } from "vuetify/components"
-import { useFormKitInput } from "./useFormKitInput.js"
 
 const props = defineProps({
   context: {

@@ -3,11 +3,11 @@
  * Vuetify head for FormKit select-family types: vselect and the self-loading
  * vdataselect. Register each with createInput(SelectInput) in the consuming app.
  */
+import { useFormKitInput } from "./useFormKitInput.js"
 import type { FormKitFrameworkContext } from "@formkit/core"
 import { computed } from "vue"
 import type { PropType } from "vue"
 import { VSelect } from "vuetify/components"
-import { useFormKitInput } from "./useFormKitInput.js"
 
 const props = defineProps({
   context: {

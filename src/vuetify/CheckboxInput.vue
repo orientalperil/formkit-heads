@@ -3,10 +3,10 @@
  * Vuetify head for the FormKit `vcheckbox` type.
  * Register with createInput(CheckboxInput) in the consuming app.
  */
+import { useFormKitInput } from "./useFormKitInput.js"
 import type { FormKitFrameworkContext } from "@formkit/core"
 import type { PropType } from "vue"
 import { VCheckbox } from "vuetify/components"
-import { useFormKitInput } from "./useFormKitInput.js"
 
 const props = defineProps({
   context: {
