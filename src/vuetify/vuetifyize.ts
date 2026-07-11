@@ -45,7 +45,20 @@ export function vuetifyize(
   extraTypeMap: Record<string, string> = {},
 ): FormKitSchemaNode[] {
   const typeMap = { ...DEFAULT_TYPE_MAP, ...extraTypeMap }
-  const clone = structuredClone(schema) as FormKitSchemaNode[]
+
+  // Deep-clone plain objects/arrays but pass functions (and other non-plain
+  // values) through by reference — `structuredClone` throws on functions, and
+  // field overrides like `dataSelect()` inject a function-valued `options`
+  // loader we must keep intact.
+  const clone = <T>(value: T): T => {
+    if (Array.isArray(value)) return value.map(clone) as T
+    if (value && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype) {
+      const out: Record<string, unknown> = {}
+      for (const [k, v] of Object.entries(value)) out[k] = clone(v)
+      return out as T
+    }
+    return value
+  }
 
   const walk = (nodes: FormKitSchemaNode[]) => {
     for (const node of nodes) {
@@ -58,6 +71,7 @@ export function vuetifyize(
     }
   }
 
-  walk(clone)
-  return clone
+  const cloned = clone(schema) as FormKitSchemaNode[]
+  walk(cloned)
+  return cloned
 }
