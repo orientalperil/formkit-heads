@@ -26,13 +26,14 @@ export default defineConfig({
       // Entry key becomes the output file path (dist/vuetify/index.js),
       // which the package.json "exports" map points at.
       entry: {
+        'index': resolve(__dirname, 'src/index.ts'),
         'vuetify/index': resolve(__dirname, 'src/vuetify/index.ts'),
       },
       formats: ['es'],
     },
     rollupOptions: {
       // Don't bundle these — consumers provide them
-      external: ['vue', 'vuetify', 'vuetify/components', '@formkit/core'],
+      external: ['vue', 'vuetify', 'vuetify/components', '@formkit/core', '@formkit/inputs'],
     },
   },
 })
