@@ -35,7 +35,7 @@ export function vuetifyInputs(overrides: FormKitLibrary = {}): FormKitLibrary {
     vselect: createInput(SelectInput, { props: ["vuetifyProps", "items"] }),
     // Same head as vselect; the extra props/features make it fetch its own
     // options. Keyed `dataSelect` to match the dataSelect() field helper.
-    dataSelect: createInput(SelectInput, {
+    vdataSelect: createInput(SelectInput, {
       props: [
         "vuetifyProps",
         ...(Array.isArray(dataSelectInput.props) ? dataSelectInput.props : []),
