@@ -8,6 +8,7 @@ import SelectInput from "./SelectInput.vue"
 import TextareaInput from "./TextareaInput.vue"
 import TextInput from "./TextInput.vue"
 import type { FormKitLibrary, FormKitOptions } from "@formkit/core"
+import { select } from "@formkit/inputs"
 import type { DefaultConfigOptions } from "@formkit/vue"
 import { createInput, defaultConfig } from "@formkit/vue"
 
@@ -32,7 +33,10 @@ export function vuetifyInputs(overrides: FormKitLibrary = {}): FormKitLibrary {
     vnumber: text,
     vemail: text,
     vtextarea: createInput(TextareaInput, { props: ["vuetifyProps"] }),
-    vselect: createInput(SelectInput, { props: ["vuetifyProps", "items"] }),
+    vselect: createInput(SelectInput, {
+      props: ["vuetifyProps", "items", ...(Array.isArray(select.props) ? select.props : [])],
+      features: select.features,
+    }),
     // Same head as vselect; the extra props/features make it fetch its own
     // options. Keyed `dataSelect` to match the dataSelect() field helper.
     vdataselect: createInput(SelectInput, {
