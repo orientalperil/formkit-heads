@@ -19,7 +19,7 @@ import type { FormKitSchemaNode } from "@formkit/core"
  */
 
 /** Structural node types that have no Vuetify bridge and pass through unchanged. */
-export const CONTAINER_TYPES: ReadonlySet<string> = new Set(["list", "group", "form"])
+export const CONTAINER_TYPES: ReadonlySet<string> = new Set(["hidden", "list", "group", "form"])
 
 /**
  * Map a schema's `$formkit` input types onto the Vuetify bridge types.
