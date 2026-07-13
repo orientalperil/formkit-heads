@@ -1,6 +1,6 @@
 {
   "name": "formkit-heads",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "homepage": "https://github.com/orientalperil/formkit-heads",
   "type": "module",
   "exports": {
