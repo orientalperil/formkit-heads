@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * Vuetify head for FormKit text-family types: vtext, vnumber, vemail.
+ * Vuetify head for FormKit text-family types: vtext, vnumber, vemail, vpassword.
  * Register each with createInput(TextInput) in the consuming app.
  */
 import { useFormKitInput } from "./useFormKitInput.js"
@@ -23,6 +23,7 @@ const { node, model, errorMessages } = useFormKitInput(props.context)
 const inputTypeMap: Record<string, string> = {
   vnumber: "number",
   vemail: "email",
+  vpassword: "password",
 }
 const inputType = computed<string | undefined>(
   () => node.props.inputType ?? inputTypeMap[node.props.type],

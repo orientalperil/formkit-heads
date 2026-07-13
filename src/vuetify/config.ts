@@ -14,8 +14,8 @@ import { createInput, defaultConfig } from "@formkit/vue"
 
 /**
  * Build the `inputs` object for a FormKit config: the Vuetify bridge types
- * (`vtext`, `vnumber`, `vemail`, `vtextarea`, `vselect`, `vcheckbox`) plus the
- * self-loading `dataSelect`.
+ * (`vtext`, `vnumber`, `vemail`, `vpassword`, `vtextarea`, `vselect`, `vcheckbox`)
+ * plus the self-loading `dataSelect`.
  *
  * Pass `overrides` to add your own types or replace any of the defaults; they're
  * spread last, so a key you provide wins.
@@ -24,14 +24,15 @@ import { createInput, defaultConfig } from "@formkit/vue"
  * defaultConfig({ inputs: vuetifyInputs({ myField: createInput(MyComp) }) })
  */
 export function vuetifyInputs(overrides: FormKitLibrary = {}): FormKitLibrary {
-  // vtext/vnumber/vemail share one definition; TextInput derives the HTML
-  // input `type` from the FormKit type name at runtime.
+  // vtext/vnumber/vemail/vpassword share one definition; TextInput derives
+  // the HTML input `type` from the FormKit type name at runtime.
   const text = createInput(TextInput, { props: ["vuetifyProps", "inputType"] })
 
   return {
     vtext: text,
     vnumber: text,
     vemail: text,
+    vpassword: text,
     vtextarea: createInput(TextareaInput, { props: ["vuetifyProps"] }),
     vselect: createInput(SelectInput, {
       props: ["vuetifyProps", "items", ...(Array.isArray(select.props) ? select.props : [])],
