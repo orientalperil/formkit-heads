@@ -27,7 +27,7 @@ export const CONTAINER_TYPES: ReadonlySet<string> = new Set(["list", "group", "f
  * The input is cloned, so the module-level generated constant is never mutated.
  * Recurses into nested `children` so fields inside repeatable groups are mapped
  * too. Compose it with `applyFieldOverrides` in either order — overrides that set
- * their own type (e.g. `dataSelect`) aren't in the map and pass through
+ * their own type (e.g. `loaderSelect`) aren't in the map and pass through
  * unchanged.
  *
  * @example
@@ -39,7 +39,7 @@ export function vuetifyize(
 ): FormKitSchemaNode[] {
   // Deep-clone plain objects/arrays but pass functions (and other non-plain
   // values) through by reference — `structuredClone` throws on functions, and
-  // field overrides like `dataSelect()` inject a function-valued `options`
+  // field overrides like `loaderSelect()` inject a function-valued `options`
   // loader we must keep intact.
   const clone = <T>(value: T): T => {
     if (Array.isArray(value)) return value.map(clone) as T

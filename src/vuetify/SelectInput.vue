@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * Vuetify head for FormKit select-family types: vselect and the self-loading
- * vdataselect. Register each with createInput(SelectInput) in the consuming app.
+ * vloaderselect. Register each with createInput(SelectInput) in the consuming app.
  */
 import { useFormKitInput } from "./useFormKitInput.js"
 import type { FormKitFrameworkContext } from "@formkit/core"
@@ -20,7 +20,7 @@ const props = defineProps({
 const { node, errorMessages } = useFormKitInput(props.context)
 
 // Vuetify's VSelect reads `items` shaped as { title, value }. FormKit
-// select-family inputs (including the self-loading vdataselect) expose their
+// select-family inputs (including the self-loading vloaderselect) expose their
 // choices on `context.options` as { label, value }, and — unlike node.props —
 // context.options is reactive, so it updates when the loader resolves. Prefer
 // explicit Vuetify `items` when a caller passes them; otherwise bridge options.

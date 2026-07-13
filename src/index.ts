@@ -1,1 +1,1 @@
-export { dataSelect, dataSelectInput } from "./data-select.js"
+export { loaderSelect, loaderSelectInput } from "./loader-select.js"

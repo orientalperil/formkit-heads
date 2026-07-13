@@ -7,7 +7,7 @@ import { select } from "@formkit/inputs"
  * Pass a loader function as the field's `options`; the input calls it on
  * creation and fills the dropdown when it resolves — so views don't need a
  * reactive `data` object or an `onMounted` fetch just to populate a relation
- * select. Use the `dataSelect()` helper to build the override.
+ * select. Use the `loaderSelect()` helper to build the override.
  */
 
 export interface SelectOption {
@@ -35,7 +35,7 @@ function loadOptionsFeature(node: FormKitNode) {
   })
 }
 
-export const dataSelectInput: FormKitTypeDefinition = {
+export const loaderSelectInput: FormKitTypeDefinition = {
   ...select,
   features: [...(select.features ?? []), loadOptionsFeature],
   // Don't share the stock select's memoized schema.
@@ -45,7 +45,7 @@ export const dataSelectInput: FormKitTypeDefinition = {
 /** Leading option for a nullable relation, letting the user clear the value. */
 const NONE_OPTION: SelectOption = { value: null, label: "— None —" }
 
-export interface DataSelectConfig {
+export interface LoaderSelectConfig {
   /** Empty-state prompt shown as the first, unselectable option. */
   placeholder?: string
   /** Prepend a "— None —" option (value `null`) for optional/nullable relations. */
@@ -60,12 +60,12 @@ export interface DataSelectConfig {
  * (an order's line items) hits the API once.
  *
  * @example
- * supplier: dataSelect(() => fetchAll(suppliersList), { value: 'id', label: 'name' }, { placeholder: 'Select a supplier…' })
+ * supplier: loaderSelect(() => fetchAll(suppliersList), { value: 'id', label: 'name' }, { placeholder: 'Select a supplier…' })
  */
-export function dataSelect<T>(
+export function loaderSelect<T>(
   listFn: () => Promise<T[]>,
   mapping: { value: keyof T; label: keyof T },
-  config: DataSelectConfig = {},
+  config: LoaderSelectConfig = {},
 ): Record<string, unknown> {
   const { nullable, prepend = [], ...fieldProps } = config
   const leading = nullable ? [NONE_OPTION, ...prepend] : prepend
@@ -80,5 +80,5 @@ export function dataSelect<T>(
       })),
     ]))
 
-  return { $formkit: "dataselect", options, ...fieldProps }
+  return { $formkit: "loaderselect", options, ...fieldProps }
 }

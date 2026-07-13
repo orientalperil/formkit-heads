@@ -2,7 +2,7 @@
  * Ready-made FormKit wiring for the Vuetify head. Consuming apps can skip the
  * per-type `createInput(...)` boilerplate and use these helpers instead.
  */
-import { dataSelectInput } from "../data-select.js"
+import { loaderSelectInput } from "../loader-select.js"
 import CheckboxInput from "./CheckboxInput.vue"
 import SelectInput from "./SelectInput.vue"
 import TextareaInput from "./TextareaInput.vue"
@@ -15,7 +15,7 @@ import { createInput, defaultConfig } from "@formkit/vue"
 /**
  * Build the `inputs` object for a FormKit config: the Vuetify bridge types
  * (`vtext`, `vnumber`, `vemail`, `vpassword`, `vtextarea`, `vselect`, `vcheckbox`)
- * plus the self-loading `dataSelect`.
+ * plus the self-loading `loaderSelect`.
  *
  * Pass `overrides` to add your own types or replace any of the defaults; they're
  * spread last, so a key you provide wins.
@@ -39,13 +39,13 @@ export function vuetifyInputs(overrides: FormKitLibrary = {}): FormKitLibrary {
       features: select.features,
     }),
     // Same head as vselect; the extra props/features make it fetch its own
-    // options. Keyed `dataSelect` to match the dataSelect() field helper.
-    vdataselect: createInput(SelectInput, {
+    // options. Keyed `loaderSelect` to match the loaderSelect() field helper.
+    vloaderselect: createInput(SelectInput, {
       props: [
         "vuetifyProps",
-        ...(Array.isArray(dataSelectInput.props) ? dataSelectInput.props : []),
+        ...(Array.isArray(loaderSelectInput.props) ? loaderSelectInput.props : []),
       ],
-      features: dataSelectInput.features,
+      features: loaderSelectInput.features,
     }),
     vcheckbox: createInput(CheckboxInput, { props: ["vuetifyProps"] }),
     ...overrides,
