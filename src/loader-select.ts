@@ -42,8 +42,15 @@ export const loaderSelectInput: FormKitTypeDefinition = {
   schemaMemoKey: undefined,
 }
 
-/** Leading option for a nullable relation, letting the user clear the value. */
-const NONE_OPTION: SelectOption = { value: null, label: "— None —" }
+/**
+ * Leading option for a nullable relation, letting the user clear the value.
+ * A factory, not a shared constant: FormKit's `options` feature masks a
+ * non-string value in place (`Object.assign(option, { value: '__mask_N', ... })`),
+ * so a singleton reused across mounts would arrive at its second mount
+ * already masked from the first — skipping re-masking and letting the next
+ * option collide onto the same token instead.
+ */
+const noneOption = (): SelectOption => ({ value: null, label: "— None —" })
 
 export interface LoaderSelectConfig {
   /** Empty-state prompt shown as the first, unselectable option. */
@@ -68,7 +75,7 @@ export function loaderSelect<T>(
   config: LoaderSelectConfig = {},
 ): Record<string, unknown> {
   const { nullable, prepend = [], ...fieldProps } = config
-  const leading = nullable ? [NONE_OPTION, ...prepend] : prepend
+  const leading = nullable ? [noneOption(), ...prepend] : prepend
 
   let cache: Promise<SelectOption[]> | undefined
   const options: OptionsLoader = () =>
