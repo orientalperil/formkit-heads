@@ -33,6 +33,7 @@ const vuetifyRemoveControl: FormKitSchemaNode = {
   props: {
     color: "error",
     variant: "tonal",
+    class: "mt-4",
     disabled: "$rows.length <= $min",
     onClick: "$handlers.repeaterRemove($index)",
   },
