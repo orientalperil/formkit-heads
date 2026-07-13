@@ -6,7 +6,7 @@
 import { useFormKitInput } from "./useFormKitInput.js"
 import type { FormKitFrameworkContext } from "@formkit/core"
 import type { FormKitOptionsItem } from "@formkit/inputs"
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import type { PropType } from "vue"
 import { VSelect } from "vuetify/components"
 
@@ -68,6 +68,35 @@ const model = computed({
   get: () => mask(props.context.value),
   set: (token) => node.input(unmask(token)),
 })
+
+// Opening the dropdown moves focus into VSelect's (teleported) list — see its
+// `onAfterEnter` -> `listRef.focus()` — which fires a native `blur` on the
+// activator input even though the user is still working in the field. Binding
+// FormKit's blur handler straight to that native event flips a `required`
+// select into its error state the moment the menu opens, before any choice is
+// made (validationVisibility defaults to 'blur'). Track the menu's open state
+// so an "opening" blur can be told apart from a real one. Vuetify's `menu` is a
+// proxied model, so `update:menu` fires reliably in both directions.
+const menuOpen = ref(false)
+
+// Forward a blur to FormKit only when it reflects the user actually leaving the
+// field: swallow native blurs fired while the menu is open (focus is moving
+// into the list, not away), but honour a blur with the menu closed — e.g.
+// tabbing past the select without ever opening it.
+function onBlur(event: FocusEvent) {
+  if (menuOpen.value) return
+  props.context.handlers.blur(event)
+}
+
+// Closing the menu means the user is done with the field for now, so mark it
+// blurred once the dropdown settles closed. Required-on-blur then resolves
+// either way: a selection has already set the value and passes, while
+// dismissing an empty menu surfaces the required message — at close time,
+// not on open.
+function onMenuUpdate(open: boolean) {
+  menuOpen.value = open
+  if (!open) props.context.handlers.blur()
+}
 </script>
 
 <template>
@@ -78,6 +107,7 @@ const model = computed({
     :error-messages="errorMessages"
     :disabled="context.disabled"
     v-bind="node.props.vuetifyProps"
-    @blur="context.handlers.blur"
+    @update:menu="onMenuUpdate"
+    @blur="onBlur"
   />
 </template>
