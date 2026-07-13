@@ -22,7 +22,7 @@ const vuetifyAddControl: FormKitSchemaNode = {
   $cmp: "VBtn",
   props: {
     variant: "tonal",
-    class: "formkit-repeater-add",
+    class: "formkit-repeater-add mt-4",
     disabled: "$max > 0 && $rows.length >= $max",
     onClick: "$handlers.repeaterAdd",
   },
@@ -33,7 +33,6 @@ const vuetifyRemoveControl: FormKitSchemaNode = {
   props: {
     color: "error",
     variant: "tonal",
-    class: "mt-4",
     disabled: "$rows.length <= $min",
     onClick: "$handlers.repeaterRemove($index)",
   },
