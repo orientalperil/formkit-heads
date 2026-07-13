@@ -15,7 +15,8 @@
     "./vuetify/vuetify-formkit-overrides.css": "./dist/vuetify/vuetify-formkit-overrides.css"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "src/"
   ],
   "scripts": {
     "build": "vite build",
